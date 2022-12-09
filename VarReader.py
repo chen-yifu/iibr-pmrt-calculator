@@ -1,14 +1,12 @@
 import pandas as pd
 import re
 from collections import OrderedDict
-import config 
 
 class VarReader:
     
     def __init__(self, metadata_path):
         self.metadata_path = metadata_path
         self.metadata = pd.read_excel(self.metadata_path)
-        config.VarReader = self
 
     def read_var_attrib(self, col_name, has_missing):
         try:
