@@ -1,0 +1,14 @@
+Feature,Coefficient
+metastatic_carcinoma_on_ax,0.24046
+his_subtype___dcis,-0.23067
+susp_LN_prsnt_composite,0.20967
+her_status,0.15977
+tumor_max_size_composite,0.15503
+his_subtype___idc,0.1547
+susp_LN_size_composite,0.1276
+dximg___ultrasound,0.12208
+pre_op_biopsy,-0.1208
+surg_indicat_prim___primary_tx,0.08879
+axillary_lymph_node_core_b,0.03667
+dximg___mammography,0.03211
+surg_indicat_prim___recurrent_cancer,-0.02014

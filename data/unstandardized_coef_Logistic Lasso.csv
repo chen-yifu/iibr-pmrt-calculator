@@ -1,0 +1,15 @@
+,coef
+PRE_dximg___mammography,0.10312951546187032
+PRE_dximg___ultrasound,0.2824115651908947
+PRE_tumor_max_size_composite,0.009346326310560904
+PRE_susp_LN_prsnt_composite,0.5441633164838596
+PRE_susp_LN_size_composite,0.024726200748971517
+PRE_pre_op_biopsy,-0.3375491731751278
+PRE_his_subtype___idc,0.3227830592133326
+PRE_his_subtype___dcis,-0.5168248452278273
+PRE_her_status,0.4005220343808662
+PRE_axillary_lymph_node_core_b,0.0998716769004228
+PRE_metastatic_carcinoma_on_ax,0.7693103131221889
+PRE_surg_indicat_prim___primary_tx,0.18935648477294556
+PRE_surg_indicat_prim___recurrent_cancer,-0.10771419377247007
+intercept,-1.5472527212086133
