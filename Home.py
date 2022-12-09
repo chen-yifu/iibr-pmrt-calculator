@@ -23,7 +23,6 @@ col_avg = pd.read_csv(col_avg_path)
 
 st.write(f"Model: {model_to_use}, {len(std_coef_df)} input features.")
 
-
 # rename columns to "Feature" and "Coefficient"
 std_coef_df.columns = ["Feature", "Coefficient"]
 unstd_coef_df.columns = ["Feature", "Coefficient"]
@@ -111,3 +110,4 @@ with st.sidebar:
     st.write(f"Probaility = 1 / (1 + exp(- ({score:.5f}))) = {prob:.5f}")
     
     st.write("---")
+set_style()
