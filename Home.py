@@ -131,7 +131,7 @@ if submit_button:
 
         prob = 1 / (1 + np.exp(-score))
         rounded_prob = my_round(prob, base=0.1)
-        st.title(f"Probability of PMRT is approximately {int(rounded_prob*100)}%.")
+        st.title(f"The probability of needing PMRT is approximately {int(rounded_prob*100)}%.")
         st.write("---")
         st.markdown("### Values entered:")
         st.write(form_values)
