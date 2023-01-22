@@ -23,9 +23,6 @@ col_avg = pd.read_csv(col_avg_path)
 
 st.write("---")
 st.write(f"This is a web calculator to estimate someone's probability of needing Post Mastectomy Radiation Treatment (PMRT), before pathology results are available.")
-st.write(f"The model shown is based on the Logistic Lasso algorithm. It found {len(std_coef_df)} PMRT risk factors to be the most relevant predictors for PMRT.")
-st.write(f"We display the factors in the order of decreasing importance found by the model.")
-st.write('---')
 st.write(f"To use this calculator, fill in the pre-operative information about the patient to calculate the probability of PMRT.")
 st.write("Note 1: if a risk factor value is missing, you may use the average value among our patient cohort, which is a retrospective cohort of consecutive patients who have undergone mastectomy with immediate alloplastic breast reconstruction from 2010 to 2020. Demographic characteristics were described in the paper.")
 st.write("Note 2: in addition, the use case of our calculator is to decide between immediate or delayed alloplastic breast reconstruction for patients with planned mastectomies. It remains to be independently evaluated and studied to answer quesions such as whether the model generalizes to other patient populations.")
@@ -58,7 +55,10 @@ VarReader = VarReader(metadata_path)
 form_to_val = {}
 
 st.write("---")
-st.write("## Nomogram Calculator Form")
+st.write(f"The model shown is based on the Logistic Lasso algorithm. It found {len(std_coef_df)} PMRT risk factors to be the most relevant predictors for PMRT.")
+st.write(f"We display the factors in the order of decreasing importance found by the model.")
+st.write('---')
+st.write("## Calculator Form")
 with st.form(key='my_form'):
     
     # For each column in the unstandardized df, create a form element that corresponds to the dtype
