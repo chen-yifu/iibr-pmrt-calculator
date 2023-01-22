@@ -89,7 +89,7 @@ with st.form(key='my_form'):
         elif dtype == "real":
             avg_val = col_to_avg[col_name]
             val = st.slider(label=label, key=col_name, max_value=100.0, step=0.01, value=avg_val)
-            html_str = f"<span style='color:grey'>If information is missing or unknown, you could choose to use the average value in dataset ({col_to_avg[col_name]:.3f}) or provide a best guess. </span>"
+            html_str = f"<span style='color:grey'>If the information is missing or unknown, you could choose to use the average value in dataset ({col_to_avg[col_name]:.3f}) or provide a best guess. </span>"
             st.markdown(html_str, unsafe_allow_html=True)
         elif dtype == "integer":
             val = st.slider(label=label, key=col_name, step=1, max_value=100, value=avg_val)
@@ -99,7 +99,7 @@ with st.form(key='my_form'):
         if val == -1:
             # write text in grey
             options_str_to_show = options_str.replace("-1, missing |", "")
-            html_str = f"<span style='color:grey'>If information is missing or unknown, select 'missing', and the average value in dataset ({col_to_avg[col_name]:.3f}) will be used. <br>The data encoding is: {options_str_to_show}</span>"
+            html_str = f"<span style='color:grey'>If the information is missing or unknown, select 'missing', and the average value in dataset ({col_to_avg[col_name]:.3f}) will be used. <br>The data encoding is: {options_str_to_show}</span>"
             st.markdown(html_str, unsafe_allow_html=True)
             val = round(col_to_avg[col_name], 5)
         # html_str = f"<span style='color:grey'>Value of {col_name}: {val}</span>"
