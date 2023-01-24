@@ -55,7 +55,7 @@ VarReader = VarReader(metadata_path)
 form_to_val = {}
 
 st.write("---")
-st.write(f"The model shown is based on the Logistic Lasso algorithm. It found {len(std_coef_df)} PMRT risk factors to be the most relevant predictors for PMRT.")
+st.write(f"The model shown is based on the Logistic Lasso algorithm. It found {len(std_coef_df) - 1} PMRT risk factors to be the most relevant predictors for PMRT.")
 st.write(f"We display the factors in the order of decreasing importance found by the model.")
 st.write('---')
 st.write("## Calculator Form")
