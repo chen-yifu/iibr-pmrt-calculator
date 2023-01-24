@@ -109,6 +109,7 @@ with st.form(key='my_form'):
     # st.write("---")
     submit_button = form_submit_button('Calculate Probability')
     st.write("To reset the form, please refresh the page.")
+    st.write("For support, please contact ANONYMOUS@EXAMPLE.COM")
 form_values = form_to_val
 
 def my_round(x, base=10):
@@ -151,6 +152,6 @@ if submit_button:
         st.markdown(f"### Estimated Probability: 1 / (1 + exp(- ({score:.5f}))) ≈ {prob*100:.1f}% ≈ {int(rounded_prob*100)}%")
         st.write("The final step used the logit function, which transforms the output of a linear regression model into a probability (between 0 and 1). We round to probability the nearest 10%.")
         st.write("---")
-        
+    
         
     set_style()
