@@ -24,8 +24,7 @@ col_avg = pd.read_csv(col_avg_path)
 st.write("---")
 st.write(f"This is a web calculator to estimate someone's probability of needing Post Mastectomy Radiation Treatment (PMRT), before pathology results are available.")
 st.write(f"To use this calculator, fill in the pre-operative information about the patient to calculate the probability of PMRT.")
-st.write("Note 1: if a risk factor value is missing, you may use the average value among our patient cohort, which is a retrospective cohort of consecutive patients who have undergone mastectomy with immediate alloplastic breast reconstruction from 2010 to 2020. Demographic characteristics were described in the paper.")
-st.write("Note 2: in addition, the use case of our calculator is to decide between immediate or delayed alloplastic breast reconstruction for patients with planned mastectomies. It remains to be independently evaluated and studied to answer quesions such as whether the model generalizes to other patient populations.")
+st.write("Note: for each risk factor below, the average value among our patient cohort will be used by default, unless you enter a value. I.e., if a risk factor is missing, the average value in the dataset used to construct this calculator will be used.")
 
 # rename columns to "Feature" and "Coefficient"
 std_coef_df.columns = ["Feature", "Coefficient"]
@@ -53,9 +52,10 @@ VarReader = VarReader(metadata_path)
 
     
 form_to_val = {}
-
-st.write("---")
-st.write(f"The model shown is based on the Logistic Lasso algorithm. It found {len(std_coef_df) - 1} PMRT risk factors to be the most relevant predictors for PMRT.")
+# st.markdown(".stTextInput > label {font-size:105%; font-weight:bold; color:blue;} ",unsafe_allow_html=True) #for all text-input label sections
+# st.markdown(".stMultiSelect > label {font-size:105%; font-weight:bold; color:blue;} ",unsafe_allow_html=True) #for all multi-select label sections
+# st.write("---")
+# st.write(f"The model shown is based on the Logistic Lasso algorithm. It found {len(std_coef_df) - 1} PMRT risk factors to be the most relevant predictors for PMRT.")
 st.write(f"We display the factors in the order of decreasing importance found by the model.")
 st.write('---')
 st.write("## Calculator Form")
@@ -64,11 +64,19 @@ with st.form(key='my_form'):
     # For each column in the unstandardized df, create a form element that corresponds to the dtype
     for i, row in unstd_coef_df.iterrows():
 
-        st.write("---")
         col_name = row["Feature"]
         if col_name == "intercept":
             # st.write(f"Intercept: {row['Coefficient']:.5f}")
             continue
+        if col_name == "PRE_surg_indicat_prim___recurrent_cancer":
+            val = 0
+            form_to_val[col_name] = val
+            continue
+        if col_name == "PRE_surg_indicat_prim___primary_tx":
+            val = 1
+            form_to_val[col_name] = val
+            continue
+        st.write("---")
         # Read the variable attributes from the metadata
         var_attrib = VarReader.read_var_attrib(col_name, has_missing=True)
         section = var_attrib["section"]
@@ -99,17 +107,17 @@ with st.form(key='my_form'):
         if val == -1:
             # write text in grey
             options_str_to_show = options_str.replace("-1, missing |", "")
-            html_str = f"<span style='color:grey'>If the information is missing or unknown, select 'missing', and the average value in dataset ({col_to_avg[col_name]:.3f}) will be used. <br>The data encoding is: {options_str_to_show}</span>"
+            html_str = f"<span style='color:grey'>If the information is missing or unknown, select 'missing', and the average value in dataset ({col_to_avg[col_name]:.3f}) will be used. <br>{options_str_to_show}</span>"
             st.markdown(html_str, unsafe_allow_html=True)
             val = round(col_to_avg[col_name], 5)
         # html_str = f"<span style='color:grey'>Value of {col_name}: {val}</span>"
         # st.markdown(html_str, unsafe_allow_html=True)
         form_to_val[col_name] = val
         
-    # st.write("---")
+    st.write("---")
     submit_button = form_submit_button('Calculate Probability')
     st.write("To reset the form, please refresh the page.")
-    st.write("For support, please contact ANONYMOUS@EXAMPLE.COM")
+    st.write("For support, please contact ANONYMOUS.SUBMISSION@EXAMPLE.COM")
 form_values = form_to_val
 
 def my_round(x, base=10):
@@ -137,21 +145,21 @@ if submit_button:
         st.markdown("### Values entered:")
         st.write(form_values)
         # write out the calculation
-        st.write("---")
-        st.markdown("### Calculation (unstandardized coefficient * value):")
-        for col_name, unstd_coef in col_to_unstd_coef.items():
-            if col_name == "intercept":
-                st.caption(f"{unstd_coef:.3f} (intercept)")
-                continue
-            form_val = form_values[col_name]
-            # st.write(f"\+ {unstd_coef:.5f} * {form_val} ({col_name})")
-            st.caption(f"\+ {unstd_coef:.5f} * {form_val} ({VarReader.read_var_attrib(col_name, has_missing=False)['label']})")
+        # st.write("---")
+        # st.markdown("### Calculation (unstandardized coefficient * value):")
+        # for col_name, unstd_coef in col_to_unstd_coef.items():
+        #     if col_name == "intercept":
+        #         st.caption(f"{unstd_coef:.3f} (intercept)")
+        #         continue
+        #     form_val = form_values[col_name]
+        #     # st.write(f"\+ {unstd_coef:.5f} * {form_val} ({col_name})")
+        #     st.caption(f"\+ {unstd_coef:.5f} * {form_val} ({VarReader.read_var_attrib(col_name, has_missing=False)['label']})")
         
-        st.write(f"= {score:.5f}")
-        st.write("---")
-        st.markdown(f"### Estimated Probability: 1 / (1 + exp(- ({score:.5f}))) ≈ {prob*100:.1f}% ≈ {int(rounded_prob*100)}%")
-        st.write("The final step used the logit function, which transforms the output of a linear regression model into a probability (between 0 and 1). We round to probability the nearest 10%.")
-        st.write("---")
+        # st.write(f"= {score:.5f}")
+        # st.write("---")
+        # st.markdown(f"### Estimated Probability: 1 / (1 + exp(- ({score:.5f}))) ≈ {prob*100:.1f}% ≈ {int(rounded_prob*100)}%")
+        # st.write("The final step used the logit function, which transforms the output of a linear regression model into a probability (between 0 and 1). We round to probability the nearest 10%.")
+        # st.write("---")
     
         
     set_style()
